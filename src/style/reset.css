@@ -1,0 +1,108 @@
+
+body{
+  background: #fff;
+  line-height: initial!important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  height: auto;
+}
+.fl{
+  float: left;
+}
+.fr{
+  float: right;
+}
+.cb{
+  clear: both;
+}
+.oh{
+  overflow: hidden;
+}
+.por{
+  position: relative;
+}
+.poa{
+  position: absolute;
+}
+/* css 重置 */
+body, p, input, h1, h2, h3, h4, h5, h6, ul, li, dl, dt, dd, form { margin: 0; padding: 0; list-style: none; vertical-align: middle; font-weight:normal; }
+img { border:0; margin: 0; padding: 0;   }
+header, section, footer { display: block; margin: 0; padding: 0 }
+a{text-decoration:none;color:#000;}
+input{
+  box-shadow: none!important;
+  outline: none;
+  border: none;
+}
+.element::-webkit-scrollbar {display:none}
+::-webkit-input-placeholder{
+  color: #000;
+  opacity: 0.4;
+}
+/* vue-awesome动态尺寸 */
+.fa-icon {
+  width: auto;
+  height: 1em; /* 或任意其它字体大小相对值 */
+
+  /* 要在 Safari 中正常工作，需要再引入如下两行代码 */
+  max-width: 100%;
+  max-height: 100%;
+}
+/*ydui*/
+.yd-loading-icon{
+  margin-right: 0!important;
+}
+.yd-confirm{
+  width: 2.7rem!important;
+  height: 1.4rem!important;
+  border-radius: 10px!important;
+}
+.yd-confirm-hd{
+  line-height: 0.16rem!important;
+  text-align: center!important;
+  font-size: 0.16rem!important;
+  padding: 0.22rem 0 0.2rem 0!important;
+}
+.yd-confirm-bd{
+  line-height: 0.14rem!important;
+  font-size: 0.14rem!important;
+  text-align: center!important;
+}
+.yd-confirm-ft{
+  height: 0.44rem!important;
+  margin-top: 0.25rem!important;
+  line-height: 0.44rem!important;
+  font-size: 0.16rem!important;
+}
+.yd-confirm-ft>a.primary{
+  color: #4884ff!important;
+}
+.yd-actionsheet-item{
+  font-size: 0.16rem!important;
+  color: #000!important;
+  height: 0.5rem!important;
+  line-height: 0.5rem!important;
+}
+.yd-actionsheet-action{
+  font-size: 0.16rem!important;
+  color: #000!important;
+  height: 0.5rem!important;
+  line-height: 0.5rem!important;
+  margin-top: 0.1rem!important;
+}
+input::-webkit-input-placeholder { /* WebKit browsers */
+  color:#999;
+}
+input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  color:#999;
+}
+input::-moz-placeholder { /* Mozilla Firefox 19+ */
+  color:#999;
+}
+input:-ms-input-placeholder { /* Internet Explorer 10+ */
+  color:#999;
+}
