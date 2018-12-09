@@ -19,3 +19,5 @@ npm run build --report
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+参考的是技术胖的vue的webapp,采用的是vant移动端框架,后台是node+mongodb
+

@@ -12,15 +12,15 @@ import './style/reset.css';
 import './config/device';
 //引入适配文件
 import './config/auto-size';
-//引入常用的方法文件
+//引入常用的方法文件(cookie,localstorage方法);
 import './config/mUtils';
 //引入路由配置
 import './config/routerBefore';
-//引入axios配置文件
-import './config/axiosConfig';
+//引入axios配置文件(get,post)皆有
+import  http from './config/axiosConfig.js';
 //引入vantui
 import './config/vantUi';
-
+Vue.prototype.$http=http;
 
 /* eslint-disable no-new */
 new Vue({

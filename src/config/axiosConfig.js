@@ -4,7 +4,7 @@
 
 import axios from 'axios'   //axios
 import qs from 'qs';
-import Vue from 'vue';
+// import Vue from 'vue';
 
 //axios请求拦截器
 //携带cookie
@@ -19,29 +19,59 @@ axios.interceptors.request.use(function (config) {
 });
 
 //axios响应拦截器
-axios.interceptors.response.use(function (response) {
-  if(response.data.status == 1404) {
-    response.data.message = "登录过期，请重新登录";
-    Vue.prototype.router.push({ path: '/login' })
-    return response.data;
-  }else{
-    return response.data;
-  }
-}, function (error) {
-   return Promise.reject(error);
-});
+// axios.interceptors.response.use(function (response) {
+//   if(response.data.status == 1404) {
+//     response.data.message = "登录过期，请重新登录";
+//     Vue.prototype.router.push({ path: '/login' })
+//     return response.data;
+//   }else{
+//     return response.data;
+//   }
+// }, function (error) {
+//    return Promise.reject(error);
+// });
+
+
+// axios中async的封装
+let http={
+//   get请求的封装
+ get:function(url,params){
+   return new Promise((resolve,reject)=>{
+       axios.get(url,{
+           params:params
+       })
+       .then((response)=>{
+         if(response.status==200){
+            resolve(response.data);
+         }else{
+             resolve("请求错误");
+         }
+       })
+       .catch((error)=>{
+         reject(error);
+       })
+   })
+ },
+ post:function(url,params){
+    return new Promise((resolve,reject)=>{
+        axios.get(url,{
+            params:params
+        })
+        .then((response)=>{
+            if(response.status==200){
+                resolve(response.data);
+             }else{
+                 resolve("请求错误");
+             }
+        })
+        .catch((error)=>{
+            reject(error);
+        })
+    }) 
+   }
+};
 
 //axios默认请求路径
-axios.defaults.baseURL = 
-'http://39.108.70.214:8080/biz/';
-//服务器正式服     
-//  'https://www.dingdangshifu.cn/biz/';
-//服务器测试服     
-  // 'http://39.108.70.214:8080/biz/';
-//本地测试服务器    
-// 'http://192.168.1.8:8081/biz/';
-//曹刚             'http://192.168.1.58:8080/biz/';
-//谢词栋          
-//  'http://192.168.1.9:8081/biz/';
-//邹聪             'http://192.168.2.103:8080/biz/';
-//邹聪阿里云        'http://39.106.37.93:8080/biz/';
+axios.defaults.baseURL = 'https://easy-mock.com/mock/5c0ce27eec15f41e9b00ea76/smileVue';
+
+export default http;

@@ -7,7 +7,7 @@
         // zepto实现 $(window).width()就是这么干的
         var winWidth;
         window.innerWidth != 0 ? winWidth = window.innerWidth : winWidth = screen.width;
-        doc.documentElement.style.fontSize = (winWidth / 375) * 100 + 'px' ;
+        doc.documentElement.style.fontSize = (winWidth / 750) * 40 + 'px' ;
     }
 
     var evt = 'onorientationchange' in win ? 'orientationchange' : 'resize';
