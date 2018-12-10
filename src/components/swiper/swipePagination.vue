@@ -1,6 +1,6 @@
 <template>
     <div>
-        <swiper>
+        <swiper :options="swiperoptions">
            <swiper-slide class="swiper-slide" v-for="(item,index) in slide" :key="index">
                 Slide {{item}}
            </swiper-slide>
@@ -15,6 +15,14 @@ export default {
     data(){
      return {
         slide:[1,2,3,4,5,6],
+        swiperoptions:{
+          loop:true,
+          pagination:{
+            el:'.swiper-pagination',
+            clickable:true
+        }
+
+        }
       }
     },
  components: {
@@ -41,3 +49,4 @@ export default {
     border-bottom:1px solid #ccc;
 }
 </style>
+

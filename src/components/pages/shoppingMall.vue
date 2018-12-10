@@ -50,7 +50,7 @@
                 <!-- <div class="swiper-pagination" slot="pagination"></div>  -->
          </swiper>
         </div>
-        <!-- <swiperDefault></swiperDefault> -->
+     
 
    </div> 
   </div>
@@ -75,13 +75,13 @@ export default {
             el: '.swiper-pagination'
           }
         },
-        //  swiperSlides: [1, 2, 3, 4, 5]
+         swiperSlides: [1, 2, 3, 4, 5]
     }
   },
   components: {
     swiper,
     swiperSlide,
-    swiperDefault
+    // swiperDefault
   },
   methods:{
     async getData(){
