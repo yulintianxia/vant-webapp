@@ -46,10 +46,12 @@
                       <div>￥{{item.price}} (￥{{item.mallPrice}})</div>
                   </div>
                </swiper-slide>
-            
-                <!-- <div class="swiper-pagination" slot="pagination"></div>  -->
+              <!-- <div class="swiper-pagination" slot="pagination"></div>  -->
          </swiper>
         </div>
+         <floor-component :floorData='floor1' :floorTitle='floorName.floor1'></floor-component>
+         <floor-component :floorData='floor2' :floorTitle='floorName.floor2'></floor-component>
+         <floor-component :floorData='floor3' :floorTitle='floorName.floor3'></floor-component>
      
 
    </div> 
@@ -60,6 +62,7 @@
 import 'swiper/dist/css/swiper.css'//这里注意具体看使用的版本是否需要引入样式，以及具体位置。
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import swiperDefault from "../swiper/swiperDefault"
+import floorComponent from "../component/floorComponent"
 export default {
   name: 'shoppingMall',
   data () {
@@ -69,28 +72,36 @@ export default {
        category:[],
        adBanner:"",
        recommendGoods:[],
+        floor1:[],         
+        floor2:[],       
+        floor3:[],        
+        floorName:{} ,   
        swiperOption: {
           slidesPerView:3,
           pagination: {
             el: '.swiper-pagination'
           }
         },
-         swiperSlides: [1, 2, 3, 4, 5]
+        
     }
   },
   components: {
     swiper,
     swiperSlide,
-    // swiperDefault
+    floorComponent
   },
   methods:{
     async getData(){
-      let data=await this.$http.get("index");
+      let data = await this.$http.get("index");
       console.log(data);
-      this.category=data.data.category;//type-bar
-      this.adBanner=data.data.advertesPicture;//广告
-      this.bannerPicArray=data.data.slides;//轮播
-      this.recommendGoods =data.data.recommend  //推荐商品
+      this.category = data.data.category;//type-bar
+      this.adBanner = data.data.advertesPicture;//广告
+      this.bannerPicArray = data.data.slides;//轮播
+      this.recommendGoods = data.data.recommend;//推荐商品
+      this.floor1 = data.data.floor1; //floor1
+      this.floor2 = data.data.floor2 //floor2
+      this.floor3 = data.data.floor3  //floor3
+      this.floorName = data.data.floorName;
     }
   },
    created () {
@@ -173,4 +184,36 @@ img.cateImg{
     font-size: 12px;
     text-align: center;
  }
+  .floor-anomaly{
+      display: flex;
+      flex-direction:row;
+      background-color: #fff;
+      border-bottom:1px solid #ddd;
+  }
+  .floor-anomaly div{
+     width:10rem;
+     box-sizing: border-box;
+     -webkit-box-sizing: border-box;
+  }
+  .floor-one{
+      border-right:1px solid #ddd;
+  }
+  .floor-two{
+      border-bottom:1px solid #ddd;
+  }
+  .floor-rule{
+      display: flex;
+      flex-direction: row;
+      /* flex-wrap:wrap; */
+      background-color: #fff;
+  }
+  .floor-rule div{
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      width:50%;
+      border-bottom:1px solid #ddd;
+  }
+  .floor-rule div:nth-child(odd){
+      border-right: 1px solid #ddd;
+  }
 </style>

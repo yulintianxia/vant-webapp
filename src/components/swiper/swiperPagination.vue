@@ -4,8 +4,9 @@
            <swiper-slide class="swiper-slide" v-for="(item,index) in slide" :key="index">
                 Slide {{item}}
            </swiper-slide>
+            <div class="swiper-pagination" slot="pagination"></div>
         </swiper>
-    </div>
+   </div>
 </template>
 <script>
 import 'swiper/dist/css/swiper.css'//这里注意具体看使用的版本是否需要引入样式，以及具体位置。
@@ -16,10 +17,9 @@ export default {
      return {
         slide:[1,2,3,4,5,6],
         swiperoptions:{
-          loop:true,
+          direction:'vertical',
           pagination:{
-            el:'.swiper-pagination',
-            clickable:true
+            el:'.swiper-pagination'
         }
 
         }
@@ -46,6 +46,11 @@ export default {
     height:4rem;
     text-align:center;
     padding-top: 3rem;
+    border-bottom:1px solid #ccc;
+}
+.swiper{
+    height:7rem;
+    border-top:1px solid #ccc;
     border-bottom:1px solid #ccc;
 }
 </style>
