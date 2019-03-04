@@ -43,7 +43,7 @@
                  <div class="recommend-item">
                    <img :src="item.image" width="80%" />
                       <div>{{item.goodsName}}</div>
-                      <div>￥{{item.price}} (￥{{item.mallPrice}})</div>
+                      <div>￥{{item.price | moneyFilter}} (￥{{item.mallPrice | moneyFilter}})</div>
                   </div>
                </swiper-slide>
               <!-- <div class="swiper-pagination" slot="pagination"></div>  -->
@@ -52,9 +52,20 @@
          <floor-component :floorData='floor1' :floorTitle='floorName.floor1'></floor-component>
          <floor-component :floorData='floor2' :floorTitle='floorName.floor2'></floor-component>
          <floor-component :floorData='floor3' :floorTitle='floorName.floor3'></floor-component>
-     
-
-   </div> 
+   </div>
+    <div class="hot-area">
+    <div class="hot-title">热卖商品</div>
+    <div class="hot-goods">
+      <!--这里需要一个list组件-->
+       <van-list>
+          <van-row gutters='20'>
+           <van-col span ='12' v-for="(item,index) in hotGoods" :key="index">
+               <goods-info :goodsId='item.goodsId' :goodsName='item.Name' :goodsImage='item.image'></goods-info>
+           </van-col>
+          </van-row>
+        </van-list>
+     </div>
+   </div>
   </div>
 </template>
 
@@ -63,6 +74,10 @@ import 'swiper/dist/css/swiper.css'//这里注意具体看使用的版本是否�
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import swiperDefault from "../swiper/swiperDefault"
 import floorComponent from "../component/floorComponent"
+import filterMoney from  '@/common/filter'
+import goodsInfo from '../component/goodsinfo'
+import {URL} from '@/config/url'
+
 export default {
   name: 'shoppingMall',
   data () {
@@ -72,15 +87,19 @@ export default {
        category:[],
        adBanner:"",
        recommendGoods:[],
-        floor1:[],         
-        floor2:[],       
-        floor3:[],        
-        floorName:{} ,   
+       floor1:[],         
+       floor2:[],       
+       floor3:[],        
+       floorName:{} ,
+       hotGoods:[], //热卖
+       list:[] ,
+       loading: false,
+       finished: false,
        swiperOption: {
-          slidesPerView:3,
-          pagination: {
-            el: '.swiper-pagination'
-          }
+       slidesPerView:3,
+       pagination:{
+       el:'.swiper-pagination'
+           }
         },
         
     }
@@ -88,11 +107,12 @@ export default {
   components: {
     swiper,
     swiperSlide,
-    floorComponent
+    floorComponent,
+    goodsInfo
   },
   methods:{
     async getData(){
-      let data = await this.$http.get("index");
+      let data = await this.$http.get(URL.getShoppingMall);
       console.log(data);
       this.category = data.data.category;//type-bar
       this.adBanner = data.data.advertesPicture;//广告
@@ -102,6 +122,29 @@ export default {
       this.floor2 = data.data.floor2 //floor2
       this.floor3 = data.data.floor3  //floor3
       this.floorName = data.data.floorName;
+      this.hotGoods  = data.data.hotGoods;//热卖商品
+
+    },
+    //列表加载
+   onLoad() {
+      // 异步更新数据
+      setTimeout(() => {
+        for (let i = 0; i < 10; i++) {
+          this.list.push(this.list.length + 1);
+        }
+        // 加载状态结束
+        this.loading = false;
+
+        // 数据全部加载完成
+        if (this.list.length >= 40) {
+          this.finished = true;
+        }
+      }, 500);
+    }
+  },
+  filters:{
+    moneyFilter(money){
+       return filterMoney(money);
     }
   },
    created () {
@@ -182,6 +225,7 @@ img.cateImg{
     width:99%;
     border-right: 1px solid #eee;
     font-size: 12px;
+    
     text-align: center;
  }
   .floor-anomaly{
@@ -215,5 +259,11 @@ img.cateImg{
   }
   .floor-rule div:nth-child(odd){
       border-right: 1px solid #ddd;
+  }
+  .hot-area{
+      text-align: center;
+      font-size:14px;
+      height: 1.8rem;
+      line-height:1.8rem;
   }
 </style>
