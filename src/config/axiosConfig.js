@@ -8,7 +8,8 @@ import qs from 'qs';
 
 //axios请求拦截器
 //携带cookie
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
+//注意后台没有对cookie做处理
 axios.defaults.timeout = 5000;
 axios.interceptors.request.use(function(config) {
     //利用qs转换
@@ -34,7 +35,6 @@ axios.interceptors.request.use(function(config) {
 
 // axios中async的封装
 let http = {
-    //   get请求的封装
     get: function(url, params) {
         return new Promise((resolve, reject) => {
             axios.get(url, {
@@ -54,15 +54,17 @@ let http = {
     },
     post: function(url, params) {
         return new Promise((resolve, reject) => {
-            axios.get(url, {
+            axios.post(url, {
                     params: params
                 })
                 .then((response) => {
                     if (response.status == 200) {
+
                         resolve(response.data);
                     } else {
                         resolve("请求错误");
                     }
+
                 })
                 .catch((error) => {
                     reject(error);
@@ -73,6 +75,6 @@ let http = {
 
 //axios默认请求路径
 axios.defaults.baseURL = 'https://easy-mock.com/mock/5c0ce27eec15f41e9b00ea76/smileVue';
-
+export const LOCALURL = 'http://localhost:3000/';
 
 export default http;
