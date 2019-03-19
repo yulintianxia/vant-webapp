@@ -1,7 +1,7 @@
 <template>
       <div>
        <van-nav-bar
-        title="用户注册"
+        title="用户登录"
         left-text="返回"
         left-arrow
         @click-left="goBack"
@@ -25,7 +25,7 @@
             :error-message = 'passwordErrMsg'
         />
         <div class="register-button">
-            <van-button type="primary" @click='registerAction'  :loading='openLoading' size="large">马上注册</van-button>
+            <van-button type="primary" @click='loginAction'  :loading='openLoading' size="large">登录</van-button>
         </div>
        </div>
     </div>
@@ -49,24 +49,44 @@ export default {
   components: {
    
   },
+  created(){
+      if (this.getStore('userInfo')) {
+         Toast.success('你已经登录');
+         this.$router.push('/')
+      }
+  },
   methods:{
     goBack(){
        this.$router.go(-1);
     },
-   async axiosRegister() {
+   async axiosLogin() {
        this.openLoading = true;
        let data = await this.$http.post(URL.registerUser, {userName:this.username, password:this.password})
         console.log(data);
         this.openLoading = false;
-     if (data.code === 200) {
-          Toast.success('注册成功');
-          this.$router.push('/')
+     if (data.code === 200 && data.message === true) {
+          await  this.saveName();
        } else {
-          Toast.fail('注册失败');
+          Toast.fail('登录失败');
+          this.openLoading = false;
        }
     },
-    registerAction() {
-      this.checkForm() && this.axiosRegister();
+    async saveName() {
+       new promise((r,j)=>{
+          this.setStore('userInfo', this.username);
+          setTimeout(()=>{
+             r();
+          }, 500)
+       }).then(()=>{
+          Toast.success('登录成功');
+          this.$router.push('/')
+       }).catch(err=>{
+           Toast.fail('登录状态保存失败')
+           console.log(err)
+       })
+    },
+    loginAction() {
+      this.checkForm() && this.axiosLogin();
     },
     //表单验证
      checkForm() {
@@ -91,9 +111,6 @@ export default {
   filters:{
    
   },
-   created () {
-         
-   },
     mounted () {
       
     }
