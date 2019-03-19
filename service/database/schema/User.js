@@ -17,7 +17,7 @@ const userSchema = new Schema({
     //每次加密加盐处理
 userSchema.pre('save', function(next) {
     //曲线救国,没法获取password,挂载于global;
-    console.log(global.password);
+    // console.log(global.password);
     bcrypt.genSalt(SALE_WORK, (err, salt) => {
         if (err) return next(err)
         bcrypt.hash(global.password, salt, (err, hash) => {

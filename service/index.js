@@ -12,6 +12,7 @@ app.use(cors());
 
 let user = require('./appApi/user.js');
 let home = require('./appApi/home.js');
+let goods = require('./appApi/goods.js');
 //装载所有子路由
 
 
@@ -32,6 +33,7 @@ let home = require('./appApi/home.js');
 let router = new Router();
 router.use('/user', user.routes());
 router.use('/home', home.routes());
+router.use('/goods', goods.routes());
 
 
 //加载中间件
