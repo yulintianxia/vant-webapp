@@ -13,6 +13,7 @@ router.post('/register', async(ctx) => {
     let newUser = new User(ctx.request.body);
     global.password = ctx.request.body.params.password;
     global.userName = ctx.request.body.params.userName;
+    console.log(global.userName, global.password);
     await newUser.save().then(() => {
         ctx.body = {
             code: 200,

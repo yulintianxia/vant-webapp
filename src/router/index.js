@@ -5,6 +5,7 @@ import ShoppingMall from '@/components/pages/ShoppingMall';
 import Register from '@/components/pages/Register';
 import Login from '@/components/pages/Login';
 import Goods from '@/components/pages/Goods';
+import CategoryList from '@/components/pages/CategoryList';
 Vue.use(VueRouter);
 
 
@@ -25,5 +26,9 @@ export default new VueRouter({
         path: '/goods',
         name: 'Goods',
         component: Goods
+    }, {
+        path: '/categoryList',
+        name: 'CategoryList',
+        component: CategoryList
     }]
 })
