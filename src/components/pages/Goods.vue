@@ -16,14 +16,14 @@
         <van-tab title="评论">评论制作中</van-tab>
       </van-tabs>
     </div>
-      <div class="goods-bottom">
-            <div>
-                <van-button size="large" type="primary" @click="addGoodsToCart">加入购物车</van-button>
-            </div>
-            <div>
-                <van-button size="large" type="danger">直接购买</van-button>
-            </div>
-        </div>
+    <div class="goods-bottom">
+      <div>
+        <van-button size="large" type="primary" @click="addGoodsToCart">加入购物车</van-button>
+      </div>
+      <div>
+        <van-button size="large" type="danger">直接购买</van-button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -47,7 +47,9 @@ export default {
   },
   methods: {
     async getGoods() {
-      this.goodsId = this.$route.query.goodsId;
+      this.goodsId = this.$route.query.goodsId
+        ? this.$route.query.goodsId
+        : this.$route.params.goodsId;
       console.log(this.goodsId);
       let data = await this.$http.post(URL.getDetailGoodsInfo, {
         goodsId: this.goodsId
@@ -63,11 +65,9 @@ export default {
     },
     addGoodsToCart() {
       //取出本地购物车中的商品
-      //localStorage.removeItem('cartInfo')
-      let cartInfo = localStorage.cartInfo? JSON.parse(localStorage.cartInfo): [];
-      let isHaveGoods = cartInfo.find(cart => cart.goodsId == this.goodsId);
+      let cartInfo = this.getStore("cartInfo")? JSON.parse(this.getStore("cartInfo")) : [];
+      let isHaveGoods = cartInfo.find(cart => cart.goodsId === this.goodsId);
       console.log(isHaveGoods);
-      console.log(this.goodsInfo);
       if (!isHaveGoods) {
         let newGoodsInfo = {
           goodsId: this.goodsInfo.ID,
@@ -77,13 +77,12 @@ export default {
           count: 1
         };
         cartInfo.push(newGoodsInfo);
-        localStorage.cartInfo = JSON.stringify(cartInfo);
+        this.setStore("cartInfo", JSON.stringify(cartInfo));
         Toast.success("添加成功");
       } else {
-        Toast.success("已有此商品");
+        Toast.success('已有此此商品');
       }
-
-      this.$router.push({ name: "Cart" });
+      this.$router.push({name:'Cart'})
     }
   },
   created() {},
@@ -95,28 +94,28 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-    .goods-name{
-        background-color: #fff;
-    } 
-    .goods-price{
-        background-color: #fff;
-    }
-    .detail {
-        font-size:0px;
-    }
-    .goods-bottom{
-        position:fixed;
-        bottom:0px;
-        left:0px;
-        background-color: #FFF;
-        width:100%;
-        display: flex;
-        flex-direction: row;
-        flex-flow:nowrap;
-    }
+.goods-name {
+  background-color: #fff;
+}
+.goods-price {
+  background-color: #fff;
+}
+.detail {
+  font-size: 0px;
+}
+.goods-bottom {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  background-color: #fff;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-flow: nowrap;
+}
 
-    .goods-bottom > div {
-        flex:1;
-        padding:5px;
-    }
+.goods-bottom > div {
+  flex: 1;
+  padding: 5px;
+}
 </style>

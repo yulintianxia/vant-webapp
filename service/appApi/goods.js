@@ -7,8 +7,6 @@ const fs = require('fs');
 
 router.get('/insertAllGoodsInfo', async(ctx) => {
     fs.readFile('./data_json/newGoods.json', 'utf8', (err, data) => {
-        console.log(err);
-        console.log(data);
         data = JSON.parse(data);
         let saveCount = 0;
 
@@ -32,7 +30,6 @@ router.get('/insertAllCategoySub', async(ctx) => {
         data = JSON.parse(data);
         let saveCount = 0;
         const Categorysub = mongoose.model('CategorySub');
-        console.log(data);
         data.RECORDS.map((value, index) => {
             let categorysub = new Categorysub(value);
             categorysub.save().then(() => {
@@ -55,7 +52,6 @@ router.get('/insertAllCategory', async(ctx) => {
         let saveCount = 0
         const Category = mongoose.model('Category')
         data.RECORDS.map((value, index) => {
-            console.log(value)
             let newCategory = new Category(value)
             newCategory.save().then(() => {
                 saveCount++
@@ -79,7 +75,6 @@ router.post('/getDetailGoodsInfo', async(ctx) => {
             ctx.body = { code: 200, message: result };
         })
         .catch(error => {
-            console.log(error);
             ctx.body = { code: 500, message: error };
         })
 })
@@ -89,7 +84,6 @@ router.get('/getCategoryList', async(ctx) => {
         try {
             const Category = mongoose.model('Category');
             let result = await Category.find().exec();
-            console.log(result);
             ctx.body = { code: 200, message: result };
         } catch (err) {
             ctx.body = { code: 500, message: err }
@@ -99,7 +93,6 @@ router.get('/getCategoryList', async(ctx) => {
 router.post('/getCategorySubList', async(ctx) => {
     try {
         let categoryId = ctx.request.body.params.categoryId;
-        console.log(categoryId);
         const CategorySub = mongoose.model('CategorySub')
         let result = await CategorySub.find({ MALL_CATEGORY_ID: categoryId }).exec()
         ctx.body = { code: 200, message: result }
@@ -111,15 +104,13 @@ router.post('/getCategorySubList', async(ctx) => {
 /**根据类别获取商品列表 */
 router.post('/getGoodsListByCategorySubID', async(ctx) => {
     try {
-        let categorySubId = ctx.request.body.params.CategorySubID;
+        let categorySubId = ctx.request.body.params.categorySubId;;
         let page = ctx.request.body.params.page;
         let num = 10; //每页显示数量
         let start = (page - 1) * num;
-
-        // let categorySubId = '2c9f6c946016ea9b016016f79c8e0000'
         const Goods = mongoose.model('Goods')
         let result = await Goods.find({ SUB_ID: categorySubId }).
-        skip(start).limit(num).exec()
+        skip(start).limit(num).exec();
         ctx.body = { code: 200, message: result }
     } catch (err) {
         ctx.body = { code: 500, message: err }
